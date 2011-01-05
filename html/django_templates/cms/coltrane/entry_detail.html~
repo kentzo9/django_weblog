@@ -1,0 +1,19 @@
+<html>
+   <head>
+      <title>{{entry.title}}</title>
+   </head>
+   <body>
+      <h1>{{entry.title}}</h1>
+      {% for entry in entry_list %}
+         <p>Published on {{ entry.pub_date|date:"F j, Y"}}</p>
+         {% if entry.excerpt_html %}
+            here
+            {{entry.excerpt_html|safe}}
+         {% else %}
+            there
+            {{entry.body_html|truncatewords_html:"50"|safe}}
+         {% endif %}
+         <!--p><a href="{{entry.get_absolute_url}}">Read full entry</a></p-->
+      {% endfor %}
+   </body>
+</html>

@@ -1,0 +1,28 @@
+Copyright (GPL) 2004, Mike Chirico. mchirico@users.sourceforge.net
+http://souptonuts.sourceforge.net/chirico/index.php
+
+You should be able to run make
+
+   $ make
+
+If you run into problems, make sure the next two conditions
+are satisfied.
+
+  1. sqlite3 must be installed. 
+
+      $ wget http://www.sqlite.org/sqlite-3.0.8.tar.gz
+      $ tar -xzf sqlite-3.0.8.tar.gz
+      $ cd sqlite-3.0.8
+      $ ./configure
+      $ make
+      $ make install
+
+  2. For all examples to work, you should be using gclib, since
+     getline is used in the program. However, some of the programs
+     will still compile without this.
+
+
+
+ 
+
+

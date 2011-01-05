@@ -1,0 +1,16 @@
+-- ******************************************************************************
+--  mesgScript: Script for creating mesg table 
+--   Usage:
+--       $ sqlite3 msgdatabase < mesgScript
+--
+--   Note: The trigger insert_mesg_timeEnter updates timeEnter in mesg
+-- ******************************************************************************
+CREATE TABLE mesg (mkey      INTEGER PRIMARY KEY,
+                   mesg      TEXT,
+                   timeEnter DATE);
+
+CREATE TRIGGER insert_mesg_timeEnter AFTER INSERT ON mesg
+BEGIN
+UPDATE mesg SET timeEnter = DATETIME('NOW')  WHERE rowid = new.rowid;
+END;
+-- ******************************************************************************

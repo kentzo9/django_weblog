@@ -1,0 +1,19 @@
+--  This is an example of last_insert_rowid()
+--
+--
+--
+PRAGMA synchronous=OFF;
+select * from test;
+insert into test (b) values (3);
+select last_insert_rowid();
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+insert into test (b) values (last_insert_rowid() + 4);
+select case b when 1 then 'one' when  2 then 'two' else 'other' end  from test;
+.tables
+.q

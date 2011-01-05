@@ -1,0 +1,5 @@
+create table blobtest (des varchar(80),b blob);
+insert into blobtest (des,b)  
+       values ('A test file: test.png',?);
+select * 
+   from  blobtest;

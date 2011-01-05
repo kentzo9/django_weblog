@@ -1,0 +1,16 @@
+Sun Nov 14 21:23:27 EST 2004
+  o Make sure these changes get added to Covey's edits
+
+   if(vcol_head.size()&gt;0) { vcol_head.clear();  }
+        if(vdata.size()&gt;0)     { vdata.clear(); }
+
+
+
+Sun Oct 31 23:26:21 EST 2004
+  o Still need to fix changes in myfunc.cc, but
+  this is getting too long. I'll see what changes
+  editing brings.
+
+Sun Oct 31 16:02:14 EST 2004
+  o I have L and S in myfunc.cc, but I need to 
+  implement L simple function.

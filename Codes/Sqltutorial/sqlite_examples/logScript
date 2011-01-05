@@ -1,0 +1,40 @@
+-- ******************************************************************************
+--  logScript: Script for creating log table and related triggers
+--   Usage:
+--       $ sqlite3 msgdatabase < logScript
+--
+--   
+-- ******************************************************************************
+CREATE TABLE log (lkey INTEGER PRIMARY KEY, 
+                  mkey INTEGER,
+                  mesgOLD TEXT, 
+                  mesgNEW TEXT,
+                  sqlType VARCHAR(15),
+                  mesgtimeEnter    DATE,
+                  mesgtimeUpdate   DATE,
+                  timeEnter        DATE);
+
+
+CREATE TRIGGER update_log UPDATE OF mesg ON mesg  
+BEGIN     
+INSERT INTO log  (mkey,mesgOLD,mesgNEW,sqlType,mesgtimeEnter,mesgtimeUpdate,timeEnter) 
+          values (old.mkey,old.mesg, new.mesg, 'UPDATE',old.timeEnter,DATETIME('NOW'),DATETIME('NOW') );     
+END;
+-- 
+--  Also create an insert log
+CREATE TRIGGER insert_log INSERT ON mesg  
+BEGIN     
+INSERT INTO log  (mkey,mesgNEW,sqlType,mesgtimeEnter,timeEnter) 
+          values (new.mkey ,new.mesg,'INSERT',new.timeEnter,DATETIME('NOW') );     
+END;
+
+--  Also create a DELETE entry in log
+CREATE TRIGGER delete_log DELETE ON mesg  
+BEGIN     
+INSERT INTO log  (mkey,mesgOLD,sqlType,timeEnter) 
+          values (old.mkey,old.mesg,'DELETE',DATETIME('NOW') );     
+END;
+-- ******************************************************************************
+
+
+

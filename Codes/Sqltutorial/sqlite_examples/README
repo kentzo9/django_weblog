@@ -1,0 +1,94 @@
+Copyright (GPL)  2004  Mike Chirico mmc mchirico@users.sourceforge.net mchirico@comcast.net
+
+
+The following commands will compile and run the samples:
+
+  make
+  make test
+  sqlite3 test3.db < script1
+
+
+
+apiSQLite.c
+
+   This is for sqlite version 2.x
+
+     Example usage:
+
+         $ ./apiSQLite test.db "create table test2 (pkey INTEGER PRIMARY KEY, note text)"
+         $ ./apiSQLite test.db "insert into test2 (note) values ('sample data 1') "
+         $ ./apiSQLite test.db "insert into test2 (note) values ('sample data 3') "
+         $ ./apiSQLite test.db "select * from test2"
+
+
+apiSQLite3.c
+
+   This assumes sqlite3 is installed.
+
+     Example usage:
+
+         $ ./apiSQLite3 test3.db "create table test2 (pkey INTEGER PRIMARY KEY, note text)"
+         $ ./apiSQLite3 test3.db "insert into test2 (note) values ('sample data 1') "
+         $ ./apiSQLite3 test3.db "insert into test2 (note) values ('sample data 3') "
+         $ ./apiSQLite3 test3.db "select * from test2"
+
+
+apiSQLite3b.c
+
+     This program is like apiSQLite3.c, except, it uses the following functions
+
+               sqlite3_prepare
+               while( sqlite3_step == SQLITE_ROW)
+                  sqlite3_column_* 
+
+     The sqlite3_step function step through each row as long as SQLITE_ROW is
+     returned. Also included in this program is the getline function, so the
+     program can be used as follows
+
+           $ ./apiSQLite3b.c database.db < script0
+
+eatblob.c
+
+     This program demonstrates the "sqlite3_bind_blob", "sqlite3_column_blob" and
+     "sqlite3_column_bytes" functions.
+
+     It can be run as follows. Note ">" is the output from the program.
+
+             $ ./eatblob test3.db test.png   
+	     create table test (a varchar(50), b blob);                           
+	    >Total Changes 0                                                      
+	     insert into test (a,b) values ('test',?);                            
+	    >Total Changes 1                                                      
+      	     select a,b from test;                                                
+    	    >IN BLOB bytes 5552                                                   
+	    >test                                                                 
+  	    >Total Changes 1                                                      
+	     ^D                                                                   
+
+     This will write the blob data to outdata.0.png, outdata.1.png .. outdata.n.png where
+     "n" is the number of blob rows returned.
+
+
+     SPECIAL NOTE:  If you have gnuplot version 4, the following will generate a png
+                    file automatically.
+
+                           $ gnuplot gnuplot.scr 
+            
+                    And
+
+                           $ gnuplot gnuplot2.scr
+
+
+                    For an excellent article reference:
+                      http://www-106.ibm.com/developerworks/library/l-gnuplot/
+
+
+createImgTable
+
+     This bash script will easily do the following:
+
+       create table imagedata (pkey integer primary key,des varchar(100), img blob, timeEnter date);
+        CREATE TRIGGER imagedata_timeEnter_trigger AFTER INSERT ON imagedata   
+          BEGIN   
+             UPDATE imagedata SET timeEnter = DATETIME('NOW')  WHERE rowid = new.rowid;  
+           END;                                                                       

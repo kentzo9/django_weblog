@@ -1,0 +1,136 @@
+Wed Feb  7 16:24:54 EST 2007
+	o Steven R. <stevenr@columbus.rr.com> pointed out an error
+	in eat blob. char *tbuf = realloc(*buf, memnext); should come
+	after memindx = memindx * MULT_INCREMENT; in the function addmem
+
+
+Thu Dec 23 17:36:39 EST 2004
+	o Tried to do some clean up for older versions of GCC
+	put files that use getline last in the Makefile 
+	o Added necessary headers 
+	o Update README_sqlite_tutorial.html 
+	o Update TUTORIAL
+
+Wed Dec  1 19:36:27 EST 2004
+	o Changed mod description
+
+Sat Nov 27 14:10:22 EST 2004
+	o Table delimiter in README_sqlite_tutorial.html
+
+Thu Nov 25 11:27:12 EST 2004
+	o Simple format change
+
+Wed Nov 24 04:10:52 EST 2004
+	o more formatting changes to README_sqlite_tutorial.html 
+
+Tue Nov 23 20:49:37 EST 2004
+	o Extra spaces cleaned up
+	
+Tue Nov 23 17:38:36 EST 2004
+	o Cleaning up html in README_sqlite_tutorial.html 
+	global replacement of  < for &lt; and > for &gt;
+
+Mon Nov 22 20:24:19 EST 2004
+	o Added suggestion from Paul DuBois <paul@snake.net>
+	on the MySQL IF function.
+
+Mon Nov 22 19:43:18 EST 2004
+	o Simple edits to README_sqlite_tutorial.html
+
+Sat Nov 20 09:03:29 EST 2004
+	o Added sqlite3apilist.cc
+	
+Sun Nov 14 21:23:58 EST 2004
+	o See below. Cannot clean a vector of zero length, so
+	  added the following:
+
+	    if(vcol_head.size()&gt;0) { vcol_head.clear();  }
+	        if(vdata.size()&gt;0)     { vdata.clear(); }
+
+Sun Nov  7 16:31:21 EST 2004
+	o Added Open publication license to document.
+
+
+Sun Nov  7 15:41:30 EST 2004
+	o Add a list of datetime options or modifies
+	to README_sqlite_tutorial.html. Note article was
+	submitted to Jeff Covey... will need to include this
+	addition.
+
+Mon Nov  1 20:28:41 EST 2004
+	o little clean up stuff Makefile just 
+	for version 3
+
+Sun Oct 31 23:26:00 EST 2004
+	o Sent off for editing. 
+
+
+Sun Oct 31 15:36:02 EST 2004
+	o I discovered errors in myfunc.cc, but, it's
+	getting better. Need a separate stringstream for
+	each call.
+
+Sat Oct 30 21:39:29 EDT 2004
+	o Still a lot of work. So far only I works
+	but I want to get the paper out
+
+Sat Oct 30 18:44:35 EDT 2004
+	o Getting myfunc.cc with I "index" and a table
+	T function. This is the first working version 
+	with the new names.
+
+Fri Oct 29 22:20:24 EDT 2004
+	o More work on myfuncpp.cc creating list, still 
+	need car and cdr. Need to clean up ssum.
+
+Thu Oct 28 22:10:17 EDT 2004
+	o Changed myfuncpp.cc  ssum to give cumulative
+	plot like output.
+
+Tue Oct 26 21:53:02 EDT 2004
+	o Added the notes example n
+
+Sun Oct 24 11:41:28 EDT 2004
+	o So much work and clean-up
+
+Sun Oct 24 09:18:42 EDT 2004
+	o perl cleaned up a bit. And
+	yesterday worked on myfuncpp.cc plus cleaning
+	up a lot of the README_sqlite file
+
+Mon Oct 18 19:55:54 EDT 2004
+	o More work on the README..html version
+
+
+Sun Oct 17 20:04:00 EDT 2004
+	o eatblob had a few errors..I can't think
+	I'm too tired at the moment. It was argc
+	or user default help.
+
+Sun Oct 10 10:02:03 EDT 2004
+	o Added perlExample.pl. 
+
+Sun Oct  3 20:37:02 EDT 2004
+	o Added simplesqlite3cpp.cc myfuncpp.cc and simplesqlite3.c
+	  - still needs work. Also worked a lot on README_sqlite_tutorial.html
+
+Tue Sep 21 14:16:46 EDT 2004
+	o eatblob - changed getline to getdel so that script
+	            ends on ';'
+	o eatblob.c allowed entries on the command prompt
+
+
+Mon Sep 20 09:54:30 EDT 2004
+	o working on sqlite article - checking triggers
+
+Sun Sep 19 11:16:24 EDT 2004
+	o examScript and examLOG
+
+
+Wed Jul 28 17:38:06 EDT 2004
+	o added eatblob.c
+	
+Tue Jul 27 11:09:44 EDT 2004
+	o added getline to apiSQLite3b.c  
+
+Last Updated: Mon Jul 26 17:14:38 EDT 2004

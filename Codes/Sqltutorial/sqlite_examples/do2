@@ -1,0 +1,10 @@
+#!/bin/bash
+rm examdatabase
+sqlite3 examdatabase < examScript 
+sqlite3 examdatabase < examLOG 
+sqlite3 examdatabase "insert into exam (fn,ln,exam,score) values ('Bob','Anderson',1,78)"
+sqlite3 examdatabase "update exam set score=89 where fn='Bob' and ln='Anderson' and exam=1"
+sqlite3 examdatabase "select * from examlog"
+sqlite3 examdatabase "update exam set score=91"
+sqlite3 examdatabase "select * from examlog"
+

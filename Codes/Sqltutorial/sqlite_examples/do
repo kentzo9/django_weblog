@@ -1,0 +1,13 @@
+#!/bin/bash
+rm msgdatabase
+sqlite3 msgdatabase < mesgScript
+sqlite3 msgdatabase < logScriptAFTER
+sqlite3 msgdatabase "insert into mesg (mesg) values ('My first message to data')"
+sqlite3 msgdatabase "select * from mesg"
+# old
+#sqlite3 msgdatabase < logScript
+sqlite3 msgdatabase "insert into mesg (mesg) values ('Test log table  message')" 
+sqlite3 msgdatabase "update mesg set mesg='NEW VALUE from update' where mesg like 'Test log%'"
+sqlite3 msgdatabase "insert into mesg (mesg) values ('will soon delete this')"
+sqlite3 msgdatabase "delete from mesg where mesg like 'will soon del%'"
+sqlite3 msgdatabase "select * from log"

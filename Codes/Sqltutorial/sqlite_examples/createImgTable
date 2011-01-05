@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+#  Quick code to create imagedata
+#
+database="test3.db"
+
+r=`sqlite3 ${database} ".tables imagedata"`;
+if [ ${r:-'nope'} = "imagedata" ]
+then
+  echo "imagedata Table exists"
+else
+
+sqlite3 ${database} <<EOF 
+create table imagedata (pkey integer primary key,des varchar(100), img blob, timeEnter date);
+CREATE TRIGGER imagedata_timeEnter_trigger AFTER INSERT ON imagedata   
+ BEGIN   
+ UPDATE imagedata SET timeEnter = DATETIME('NOW')  WHERE rowid = new.rowid;  
+ END;                                                                       
+EOF
+fi

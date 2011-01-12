@@ -46,6 +46,7 @@ urlpatterns = patterns('django.views.generic.date_based',
 )
 
 urlpatterns += patterns('',
-     (r'^categories/$', 'django.views.generic.list_detail.object_list',{'query_set':Category.objects.all()}),
+     (r'^categories/$', 'django.views.generic.list_detail.object_list',{'queryset':Category.objects.all()}),
+     #(r'^categories/$', 'coltrane.views.category_list'),
      (r'^categories/(?P<slug>[-\w]+)/$', 'coltrane.views.category_detail'),
 )

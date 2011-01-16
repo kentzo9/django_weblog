@@ -23,4 +23,4 @@ def category_detail(request, slug):
     #return render_to_response('coltrane/category_detail.html',
     #                          { 'object_list': category.entry_set.all(),
     #                             'category': category })
-    return object_list(request, queryset=category.entry_set.all(),extra_context={'category':category} )
+    return object_list(request, queryset=category.live_entry_set(),extra_context={'category':category} )

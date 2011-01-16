@@ -19,6 +19,15 @@ class Category(models.Model):
    
    def get_absolute_url(self):
       return "/categories/%s/" % self.slug
+   
+   def live_entry_set(self):
+      from coltrane.models import Entry
+      return self.entry_set.filter(status=Entry.LIVE_STATUS)
+
+#subclass of subclass of django.db.models.Manager, meant to override the get_query_set
+class LiveEntryManager(models.Manager):
+   def get_query_set(self):
+      return super(LiveEntryManager, self).get_query_set().filter(status=self.model.LIVE_STATUS)
 
 class Entry(models.Model):
    LIVE_STATUS = 1
@@ -41,6 +50,11 @@ class Entry(models.Model):
    excerpt_html = models.TextField(editable=False, blank=True)
    body_html = models.TextField(editable=False, blank=True)
    tags = TagField()
+   ##defining own Manager
+   #live = LiveEntryManager()
+   objects = models.Manager()
+   live = LiveEntryManager()
+  
 
    class Meta:
       ordering = ['pub_date']

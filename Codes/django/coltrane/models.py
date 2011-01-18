@@ -17,8 +17,11 @@ class Category(models.Model):
    def __unicode__(self):
       return self.title
    
+##   def get_absolute_url(self):
+##      return "categories/%s/" % self.slug
    def get_absolute_url(self):
-      return "/categories/%s/" % self.slug
+     return ('coltrane_category_detail',(),{'slug':self.slug})
+   get_absolute_url = models.permalink(get_absolute_url)
    
    def live_entry_set(self):
       from coltrane.models import Entry

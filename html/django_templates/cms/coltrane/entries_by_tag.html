@@ -1,0 +1,24 @@
+{% extends "base_tags.html" %}
+<!--html>
+   <head>
+      <title>Entries by tag</title>
+   </head>
+   <body>
+      <h1>Entries by tagged by {{tag.name}}</h1>
+      {% for entry in object_list %}      
+         <p>{{entry.title}}</p>
+      {% endfor %}
+   </body>
+</html-->
+
+{% block title %}{{ block.super }} | Latest entries{% endblock %}
+
+{% block content %}
+   {% for entry in object_list %}
+     {{entry.title}}         
+   {% endfor %}
+{% endblock %}
+
+{% block whatis %}
+<p>This is a list of {{object_list.count}} entries tagged by {{tag.name}} in my blog.</p>
+{% endblock %}

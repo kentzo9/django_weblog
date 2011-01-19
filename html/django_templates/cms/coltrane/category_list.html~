@@ -1,0 +1,11 @@
+<html>
+   <head>
+      <title>Category list</title>
+   </head>
+   <body>
+      <h1>Category list</h1>
+      {% for category in object_list %}      
+         <p>{{category.title}}</p>
+      {% endfor %}
+   </body>
+</html>

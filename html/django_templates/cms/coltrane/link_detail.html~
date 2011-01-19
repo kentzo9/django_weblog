@@ -1,0 +1,11 @@
+<html>
+   <head>
+      <title>{{object.title}}</title>
+   </head>
+   <body>
+      <h1>{{object.title}}</h1>      
+         <p>Published on {{ object.pub_date|date:"F j, Y"}}</p>
+         <p>The content:</p>
+         {{object.description_html}}
+   </body>
+</html>

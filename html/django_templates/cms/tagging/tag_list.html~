@@ -1,0 +1,11 @@
+<html>
+   <head>
+      <title>Tag list</title>
+   </head>
+   <body>
+      <h1>Tag list</h1>
+      {% for tag in object_list %}      
+         <p>{{tag.name}}</p>
+      {% endfor %}
+   </body>
+</html>

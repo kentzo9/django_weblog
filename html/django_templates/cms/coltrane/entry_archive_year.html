@@ -1,0 +1,31 @@
+{% extends "base_entries.html" %}
+
+{% block title %}{{ block.super }} | {{ year }}{% endblock %}
+
+{% block content %} 
+<ul>
+   {% for month in date_list %}
+      <li>
+        <!--a href="/weblog/entries/{{year}}/{{month|date:"b"}}/">{{month|date:"F" }}</a-->
+         <a href="{% url coltrane_entry_archive_month year,month|date:"b" %}">{{month|date:"F" }}</a>
+      </li>
+   {% endfor %}
+</ul>
+{% endblock %}
+
+{% block whatis %}
+<p>This is a list of month in {{year}} in which I published entries in my blog.</p>
+{% endblock %}
+
+<!--         {% for entry in object_list %}
+            <h2>{{entry.title}}</h2>
+            <p>Published on {{ entry.pub_date|date:"F j, Y"}}</p>
+            {% if entry.excerpt_html %}
+               here
+               {{entry.excerpt_html|safe}}
+            {% else %}
+               there
+               {{entry.body_html|truncatewords_html:"50"|safe}}
+            {% endif %}
+            <p><a href="{{entry.get_absolute_url}}">Read full entry</a></p>
+         {% endfor %} -->

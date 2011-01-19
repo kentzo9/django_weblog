@@ -1,0 +1,11 @@
+<html>
+   <head>
+      <title>Entries list</title>
+   </head>
+   <body>
+      <h1>Entries under Category {{category}} </h1>
+      {% for entry in object_list %}      
+         <p>{{entry.title}}</p>
+      {% endfor %}
+   </body>
+</html>

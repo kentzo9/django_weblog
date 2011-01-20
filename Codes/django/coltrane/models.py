@@ -54,9 +54,9 @@ class Entry(models.Model):
    body_html = models.TextField(editable=False, blank=True)
    tags = TagField()
    ##defining own Manager
-   #live = LiveEntryManager()
-   objects = models.Manager()
    live = LiveEntryManager()
+   objects = models.Manager()
+   #live = LiveEntryManager()
   
 
    class Meta:

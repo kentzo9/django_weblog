@@ -54,9 +54,12 @@ class Entry(models.Model):
    body_html = models.TextField(editable=False, blank=True)
    tags = TagField()
    ##defining own Manager
-   live = LiveEntryManager()
+   ## the seuquence here is important, if placed before objects,
+   ## we can see the entries that are live at the website
+   ## however the entry
+   ##live = LiveEntryManager()
    objects = models.Manager()
-   #live = LiveEntryManager()
+   live = LiveEntryManager()
   
 
    class Meta:

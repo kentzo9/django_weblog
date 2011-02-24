@@ -3,11 +3,11 @@ from django.conf.urls.defaults import *
 from coltrane.models import Entry
 
 entry_info_dict = {
-    'queryset': Entry.objects.all(),
+    'queryset': Entry.live.all(),
     'date_field': 'pub_date',
     }
 entry_info_dict1 = {
-    'queryset': Entry.objects.all(),
+    'queryset': Entry.live.all(),
     'date_field': 'pub_date',
     'template_name':'coltrane/entry_index.html',
     'template_object_name':'entry_list',

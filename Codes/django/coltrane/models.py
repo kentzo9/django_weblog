@@ -56,7 +56,7 @@ class Entry(models.Model):
    ##defining own Manager
    ## the seuquence here is important, if placed before objects,
    ## we can see the entries that are live at the website
-   ## however the entry
+   ## however the entry does not appear in the Admin interface.
    ##live = LiveEntryManager()
    objects = models.Manager()
    live = LiveEntryManager()

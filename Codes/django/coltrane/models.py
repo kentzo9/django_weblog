@@ -49,7 +49,7 @@ class Entry(models.Model):
    author = models.ForeignKey(User)
    enable_comments = models.BooleanField(default=True)
    status = models.IntegerField(choices=STATUS_CHOICES, default=LIVE_STATUS)
-   categories = models.ManyToManyField(Category) #ManyToMany is used to relate this entry to more than one Category object, this will create a new join table containing entry as and entry_id field and category as  category_id which is references to class category. 
+   categories = models.ManyToManyField(Category) #ManyToMany is used to relate this entry to more than one Category object, this will create a new join table containing entry as entry_id field and category as  category_id which is references to class category. 
    excerpt_html = models.TextField(editable=False, blank=True)
    body_html = models.TextField(editable=False, blank=True)
    tags = TagField()

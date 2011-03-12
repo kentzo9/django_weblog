@@ -235,6 +235,7 @@ class TagManager(models.Manager):
             tag = self.model(*row[:2])
             if counts is True:
                 tag.count = row[2]
+                print 'tag:%s count:%d' % (tag.name,tag.count)
             related.append(tag)
         return related
 

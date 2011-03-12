@@ -14,9 +14,19 @@
 {% block title %}{{ block.super }} | Latest entries{% endblock %}
 
 {% block content %}
+   {% if object_list.count == 0 %}
+      No entry tagged by {{tag.name}}<br />
+   {% endif %}
    {% for entry in object_list %}
-     {{entry.title}}         
+     <a href="{{entry.get_absolute_url}}">{{entry.title}}</a><br/>
    {% endfor %}
+   {% load coltrane_tags %}
+   {% if related_tags|is_list_not_empty %}
+     <br/> Related tags:<br />
+     {% for relatedtag in related_tags %}
+       <a href="/weblog/tags/entries/{{relatedtag.name}}">{{relatedtag.name}}</a><br/>
+     {% endfor %}
+   {% endif %}
 {% endblock %}
 
 {% block whatis %}

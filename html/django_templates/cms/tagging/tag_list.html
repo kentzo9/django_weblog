@@ -11,10 +11,17 @@
    </body>
 </html-->
 {% block title %}{{ block.super }} | Latest entries{% endblock %}
-
+{% load coltrane_tags %}
 {% block content %}
    {% for tag in object_list %}
-     {{tag.name}}         
+     {{tag.name}}[
+     {% if tag|tag_in_entry %}
+       <a href="/weblog/tags/entries/{{tag.name}}">Entry</a>
+     {% endif %}
+     {% if tag|tag_in_link %}
+       <a href="/weblog/tags/links/{{tag.name}}"> Link</a>         
+     {% endif %}
+     ]<br/>
    {% endfor %}
 {% endblock %}
 

@@ -1,6 +1,8 @@
 from django import template
-from coltrane.models import Entry
+from coltrane.models import Entry, Link
 from django.db.models import get_model
+from tagging.utils import get_tag
+from tagging.models import Tag, TaggedItem
 
 def do_latest_entries(parser, token):
    return LatestEntriesNode()
@@ -45,3 +47,33 @@ class LatestContentNode(template.Node):
 register = template.Library()
 register.tag('get_latest_entries', do_latest_entries)
 register.tag('get_latest_content', do_latest_content)
+
+@register.filter
+def cut(value, arg):
+   "Removes all values of arg from the given string"
+   return value.replace(arg, '')
+
+@register.filter
+def tag_in_entry(value):
+   "Removes all values of arg from the given string"
+   if isinstance(value, Tag):
+      queryset = TaggedItem.objects.get_by_model(Entry,value)
+      return queryset.count()
+   else:
+      return False
+
+@register.filter
+def tag_in_link(value):
+   "Removes all values of arg from the given string"
+   if isinstance(value, Tag):
+      queryset = TaggedItem.objects.get_by_model(Link,value)
+      return queryset.count()
+   else:
+      return False
+
+@register.filter
+def is_list_not_empty(list):
+   if type(list).__name__=='list':      
+      return len(list) > 0
+   else:
+      return False

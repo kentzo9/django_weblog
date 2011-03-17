@@ -5,6 +5,9 @@
 {% block content %}
 <h2>{{ object.title }}</h2>
 {{ object.body_html|safe }}
+<h2>Post a comment</h2>
+{% load comments %}
+{% render_comment_form for object %}
 {% endblock %}
 
 {% block whatis %}

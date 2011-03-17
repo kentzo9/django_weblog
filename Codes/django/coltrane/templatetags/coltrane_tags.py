@@ -4,9 +4,12 @@ from django.db.models import get_model
 from tagging.utils import get_tag
 from tagging.models import Tag, TaggedItem
 
+#this is the functions that tie to the tag, it must accept parser and token
+#it must return a template.node object
 def do_latest_entries(parser, token):
    return LatestEntriesNode()
 
+#subclas of template.Node which must have a render method which return a string
 class LatestEntriesNode(template.Node):
    def render(self, context):
       context['latest_entries'] = Entry.live.all()[:5]

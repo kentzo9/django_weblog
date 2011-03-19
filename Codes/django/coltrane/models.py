@@ -122,7 +122,23 @@ class Link(models.Model):
                                         'slug':self.slug})
    get_absolute_url = models.permalink(get_absolute_url)
 
+from django.contrib.comments.models import Comment
+from django.db.models import signals
 
+def moderate_comment(sender,instance,**kwargs):
+    if not instance.id:
+        entry = instance.content_object
+        print "new comment, check how old is the entry"
+        delta = datetime.datetime.now() - entry.pub_date
+        if delta.days > 30:
+            instance.is_public = False
+            
+##in base models.signals, pre_save is a instance of Signals
+## pre_save was called with pre_save.send() in the base models
+## the following is the attache function to that signal.
+## so when the signal is sent out by pre_save, this function will receive it
+## and get executed
+signals.pre_save.connect(moderate_comment, sender=Comment)
 
 
 

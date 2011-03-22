@@ -137,6 +137,8 @@ def moderate_comment(sender,instance,**kwargs):
             instance.is_public = False
 
 def moderate_comment2(sender, comment, request, **kwargs):
+   print "AGENT: "+request.META['HTTP_USER_AGENT']
+   print "REFER: "+request.META['HTTP_REFERER']
    if not comment.id:
       entry = comment.content_object
       delta = datetime.datetime.now() - entry.pub_date

@@ -155,9 +155,9 @@ def moderate_comment2(sender, comment, request, **kwargs):
             if akismet_api.comment_check(smart_str(comment.comment),akismet_data,build_data=True):
                comment.is_public = False
 
-##in base models.signals, pre_save is a instance of Signals
+##in models.signals, pre_save is a instance of Signals
 ## pre_save was called with pre_save.send() in the base models
-## the following is the attache function to that signal.
+## the following is the  function attached to that signal.
 ## so when the signal is sent out by pre_save, this function will receive it
 ## and get executed
 signals.pre_save.connect(moderate_comment, sender=Comment)

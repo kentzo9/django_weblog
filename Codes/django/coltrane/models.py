@@ -127,11 +127,17 @@ from django.db.models import signals
 from django.contrib.comments.signals import comment_will_be_posted
 from django.contrib.sites.models import Site
 from akismet import Akismet
+from django.core.signals import request_finished
+#this function send emails to list specified in settings.MANAGERS
+from django.core.mail import mail_managers
+#from django.dispatch import receiver this is avalable in django 1.3
 
-def moderate_comment(sender,instance,**kwargs):
+def moderate_comment(sender,instance, raw, **kwargs):
     if not instance.id:
         entry = instance.content_object
+        print type(sender)
         print "new comment, check how old is the entry"
+        print type(raw)
         delta = datetime.datetime.now() - entry.pub_date
         if delta.days > 30:
             instance.is_public = False
@@ -154,6 +160,9 @@ def moderate_comment2(sender, comment, request, **kwargs):
                              'user-agent': request.META['HTTP_USER_AGENT'] }
             if akismet_api.comment_check(smart_str(comment.comment),akismet_data,build_data=True):
                comment.is_public = False
+      email_body = "%s posted a new comment on the entry '%s'."
+      mail_managers("New comment posted",
+              email_body % (comment.name,comment.content_object))
 
 ##in models.signals, pre_save is a instance of Signals
 ## pre_save was called with pre_save.send() in the base models
@@ -161,78 +170,15 @@ def moderate_comment2(sender, comment, request, **kwargs):
 ## so when the signal is sent out by pre_save, this function will receive it
 ## and get executed
 signals.pre_save.connect(moderate_comment, sender=Comment)
+## comment_will_be_posted is a signal defined in the comments.signal
 comment_will_be_posted.connect(moderate_comment2,sender=Comment)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## demo how to use request_finished signal
+#@receiver(request_finished)
+def my_callback(sender, **kwargs):
+   print "Request Finished"
+   
+request_finished.connect(my_callback)
 
 
 

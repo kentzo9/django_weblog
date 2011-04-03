@@ -132,7 +132,7 @@ from django.core.signals import request_finished
 from django.core.mail import mail_managers
 #from django.dispatch import receiver this is avalable in django 1.3
 
-def moderate_comment(sender,instance, raw, **kwargs):
+def moderate_comment(sender,raw,instance, **kwargs):
     if not instance.id:
         entry = instance.content_object
         print type(sender)
@@ -171,15 +171,41 @@ def moderate_comment2(sender, comment, request, **kwargs):
 ## and get executed
 signals.pre_save.connect(moderate_comment, sender=Comment)
 ## comment_will_be_posted is a signal defined in the comments.signal
-comment_will_be_posted.connect(moderate_comment2,sender=Comment)
+##comment_will_be_posted.connect(moderate_comment2,sender=Comment)
 
 ## demo how to use request_finished signal
-#@receiver(request_finished)
+#@receiver(request_finished) this is using decorator which is availabe in django 1.3
 def my_callback(sender, **kwargs):
    print "Request Finished"
    
 request_finished.connect(my_callback)
 
+##The following use the CommentModerator class to moderate the comments on Entry
+
+from django.contrib.comments.moderation import CommentModerator, moderator
+
+class EntryModerator(CommentModerator):
+   auto_moderate_field = 'pub_date'
+   moderate_after = 30
+   email_notification = True
+
+   def moderate(self, comment, content_object, request):
+      already_moderated = super(EntryModerator,self).moderate(comment, content_object, request)
+      if already_moderated:
+          return True
+      akismet_api = Akismet(key=settings.AKISMET_API_KEY,
+                            blog_url="http:/%s/" % 
+
+te.objects.get_current().domain)
+      if akismet_api.verify_key():
+         akismet_data = { 'comment_type': 'comment',
+                          'referrer': request.META['HTTP_REFERER'],
+                          'user_ip': comment.ip_address,
+                          'user-agent': request.META['HTTP_USER_AGENT'] }
+         return akismet_api.comment_check(smart_str(comment.comment),akismet_data,build_data=True)
+      return False
+
+moderator.register(Entry, EntryModerator)
 
 
 

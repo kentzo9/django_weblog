@@ -4,6 +4,9 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+from coltrane.feeds import LatestEntriesFeed
+feeds = {'entries': LatestEntriesFeed }
+
 urlpatterns = patterns('',
     # Example:
     # (r'^cms/', include('cms.foo.urls')),
@@ -21,5 +24,6 @@ urlpatterns = patterns('',
     (r'^weblog/tags/', include('coltrane.urls.tags')),
     (r'^weblog/', include('coltrane.urls.entries')),
     (r'^comments/',include('django.contrib.comments.urls')),
-    (r'', include('django.contrib.flatpages.urls')),   
+    (r'^feeds/(?P<url>.*)/$','django.contrib.syndication.views.feed',{'feed_dict':feeds}),
+    (r'', include('django.contrib.flatpages.urls')),
 )

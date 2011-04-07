@@ -2,7 +2,8 @@
 
 {% block title %}{{ block.super }} | Latest entries{% endblock %}
 
-{% block content %} 
+{% block content %}
+   {{kentseng}}
    {% for entry in entry_list %}
      <h2>{{entry.title}}</h2>
      <p>Published on {{ entry.pub_date|date:"F j, Y"}}</p>

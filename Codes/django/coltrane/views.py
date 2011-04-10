@@ -18,6 +18,18 @@ def entry_detail(request,year,month,day,slug):
 def category_list(request):
     return render_to_response('coltrane/category_list.html', {'object_list' : Category.objects.all()})
 
+##The following technique can be used to send download file to the
+##browser. The template_name here can be any text file, not necessary
+##a valid html file. change the template_name to arbitary text file.
+def category_list_plaintext(request):
+   print "ZhangLI"
+   response = object_list(request,
+                          queryset = Category.objects.all(),
+                          mimetype = 'text/plain',                                           template_name = 'coltrane/category_list.html')
+   response["Content-Disposition"] = "attachment; filename=category_list.txt"
+   return response
+
+##Displaying the list of entries under certain category passed in as slug
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     #return render_to_response('coltrane/category_detail.html',

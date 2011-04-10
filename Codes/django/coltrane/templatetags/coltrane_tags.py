@@ -17,6 +17,7 @@ class LatestEntriesNode(template.Node):
     
 ## This is the more general function compare to the above
 def do_latest_content(parser, token):
+   '''get_latest_content appname.modelname #object as varname '''
    bits = token.split_contents()
    if len(bits) != 5:
       raise template.TemplateSyntaxError("'get_latest_content' takes exactly four arguments")

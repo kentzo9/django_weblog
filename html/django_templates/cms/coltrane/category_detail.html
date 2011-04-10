@@ -5,6 +5,7 @@
 {% block content %}
    <h1>Entries under Category {{category}} </h1>
    <ul>
+   <strong>zl</strong>
    {% for entry in object_list %}
       <li><a href="{{ entry.get_absolute_url}}">{{ entry.title}}</a>
       </li>

@@ -27,5 +27,6 @@ urlpatterns = patterns('',
     (r'^comments/',include('django.contrib.comments.urls')),
     (r'^feeds/(?P<url>entries)/$','django.contrib.syndication.views.feed',{'feed_dict':feeds}),
     (r'^feeds/(?P<url>categories/.*)/$','django.contrib.syndication.views.feed',{'feed_dict':feed2s}),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': '/home/kentzo/django_weblog/media/'}),                   
     (r'', include('django.contrib.flatpages.urls')),
 )

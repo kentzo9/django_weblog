@@ -39,16 +39,16 @@
 {% else %}
    <p>This entry isn't part of any categories.</p>
 {% endif %}
-
+{% load tagging_tags %}
 {% if object.tags %}
-   <p>Tag{{object.tags.count|pluralize}}:
-   {{ object.tags.split }}
-   {% for tag in object.tags.serialize %}
-      <a href="{{ category.get_absolute_url}}">{{ tag }}</a>
+   {% tags_for_object object as tag_list %}
+   <p>Tag{{tag_list|length|pluralize}}:
+      {% for tag in tag_list %}
+      <a href="/weblog/tags/entries/{{tag.name}}">{{tag.name}}</a>
       {% if forloop.last %}{% else %}
-      {% ifequal forloop.revcount0 1 %}and {% else %}, {% endifequal %}
+         {% ifequal forloop.revcount0 1 %}and {% else %}, {% endifequal %}
       {% endif %}
-   {% endfor %}
+      {% endfor %}
    </p>
 {% else %}
    <p>This entry has no tag associated with.</p>

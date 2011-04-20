@@ -29,5 +29,5 @@
 {% endblock %}
 
 {% block whatis %}
-<p>This is a list of {{object_list.count}} links tagged by <b>{{tag.name}}</b> in my blog.</p>
+<p>This is a list of {{object_list.count}} ulink{{object_list.count|pluralize}} tagged by <b>{{tag.name}}</b> in my blog.</p>
 {% endblock %}

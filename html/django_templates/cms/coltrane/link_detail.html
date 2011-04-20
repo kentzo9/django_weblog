@@ -24,16 +24,18 @@
 
 {% block whatis %}
 <p>This is a link posted to my blog on {{ object.pub_date|date:"F j, Y" }}.</p>
-{{object.tags}}
-{% if object.tags.objects.count %}
-  <p>This link is tagged with
-  {% for tag in object.tags.objects.all %}
-    <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
-    {% if forloop.last %}{% else %}
-    {% ifequal forloop.revcounter0 1 %}and {% else %}, {% endifequal %}
-    {% endif %}
-  {% endfor %}
-  </p>
+
+{% load tagging_tags %}
+{% if object.tags %}
+   {% tags_for_object object as tag_list %}
+   <p>Tag{{tag_list|length|pluralize}}:
+      {% for tag in tag_list %}
+      <a href="/weblog/tags/links/{{tag.name}}">{{tag.name}}</a>
+      {% if forloop.last %}{% else %}
+         {% ifequal forloop.revcount0 1 %}and {% else %}, {% endifequal %}
+      {% endif %}
+      {% endfor %}
+   </p>
 {% else %}
   <p>This link doesn't have any tags.</p>
 {% endif %}

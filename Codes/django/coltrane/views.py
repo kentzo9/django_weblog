@@ -39,21 +39,23 @@ def category_detail(request, slug):
     return object_list(request, queryset=category.live_entry_set(),extra_context={'category':category} )
 
 def track_archive(request):
-   tracks = Entry.objects.live()
+   tracks = Entry.live.all()
    archive = {}
 
    date_field = 'pub_date'
 
    years = tracks.dates(date_field, 'year')[::-1]
    for date_year in years:
-       months = tracks.filter(date__year=date_year.year).dates(date_field, 'month')
+       months = tracks.filter(pub_date__year=date_year.year).dates(date_field, 'month')
        archive[date_year] = months
 
    archive = sorted(archive.items(), reverse=True)
 
-   return date_based.archive_index(
+   return archive_index(
         request,
         date_field=date_field,
         queryset=tracks,
+        template_name='coltrane/entry_index.html',
+        template_object_name='entry_list',
         extra_context={'archive': archive},
    )

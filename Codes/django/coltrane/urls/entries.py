@@ -12,8 +12,10 @@ entry_info_dict1 = {
     'template_name':'coltrane/entry_index.html',
     'template_object_name':'entry_list',
     }
-urlpatterns = patterns('django.views.generic.date_based',
-     (r'^$', 'archive_index', entry_info_dict1, 'coltrane_entry_archive_index'),
+
+urlpatterns = patterns('',(r'^$', 'coltrane.views.track_archive',{}, 'coltrane_entry_archive_index'))
+urlpatterns += patterns('django.views.generic.date_based',
+    # (r'^$', 'archive_index', entry_info_dict1, 'coltrane_entry_archive_index'),
      (r'^(?P<year>\d{4})/$', 'archive_year', entry_info_dict,'coltrane_entry_archive_year'),
      (r'^(?P<year>\d{4})/(?P<month>\w{3})/$',
       'archive_month',entry_info_dict,'coltrane_entry_archive_month'),

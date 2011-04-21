@@ -21,9 +21,9 @@
 <h2>Archive</h2>
 {% for y, months in archive %}
 <div>
-  {{ y.year }} archives: 
+  {{ y.year }}:
   {% for m in months %}
-    {{ m|date:"F" }}
+    <a href='/weblog/{{y.year}}/{{m|date:"b"}}/'>{{ m|date:"M"}}</a>
   {% endfor %}
 </div>
 {% endfor %}

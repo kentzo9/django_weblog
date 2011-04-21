@@ -2,12 +2,14 @@
 
 {% block title %}{{ block.super }} | {{ year }}{% endblock %}
 
-{% block content %} 
+{% block content %}
+
 <ul>
    {% for month in date_list %}
       <li>
         <!--a href="/weblog/entries/{{year}}/{{month|date:"b"}}/">{{month|date:"F" }}</a-->
-         <a href="{% url coltrane_entry_archive_month year,month|date:"b" %}">{{month|date:"F" }}</a>
+         
+         <a href="{% url coltrane_entry_archive_month year,month|date:"b" %}">{{month|date:"F, Y" }}</a>
       </li>
    {% endfor %}
 </ul>

@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from coltrane.models import Entry, Category
 from django.views.generic.list_detail import object_list
+from django.views.generic.date_based import archive_index
 
 def entries_index(request):
     return render_to_response('coltrane/entry_index.html', {'entry_list' : Entry.objects.all()})
@@ -36,3 +37,23 @@ def category_detail(request, slug):
     #                          { 'object_list': category.entry_set.all(),
     #                             'category': category })
     return object_list(request, queryset=category.live_entry_set(),extra_context={'category':category} )
+
+def track_archive(request):
+   tracks = Entry.objects.live()
+   archive = {}
+
+   date_field = 'pub_date'
+
+   years = tracks.dates(date_field, 'year')[::-1]
+   for date_year in years:
+       months = tracks.filter(date__year=date_year.year).dates(date_field, 'month')
+       archive[date_year] = months
+
+   archive = sorted(archive.items(), reverse=True)
+
+   return date_based.archive_index(
+        request,
+        date_field=date_field,
+        queryset=tracks,
+        extra_context={'archive': archive},
+   )

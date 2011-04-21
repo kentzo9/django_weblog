@@ -3,3 +3,17 @@
 {% block title %}| Entries{% endblock %}
 
 {% block bodyclass %}entries{% endblock %}
+
+{% block archiveblock %}
+<h2>Archive</h2>
+{% load coltrane_tags %}
+{% get_entry_archive %}
+{% for y, months in entry_archive %}
+<div>
+  {{ y.year }}:
+  {% for m in months %}
+    <a href='/weblog/{{y.year}}/{{m|date:"b"}}/'>{{ m|date:"M"}}</a>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

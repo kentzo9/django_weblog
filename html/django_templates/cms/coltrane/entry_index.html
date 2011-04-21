@@ -18,13 +18,4 @@
 
 {% block whatis %}
 <p>This is a list of the latest {{entry_list.count}} entries published in my blog.</p>
-<h2>Archive</h2>
-{% for y, months in archive %}
-<div>
-  {{ y.year }}:
-  {% for m in months %}
-    <a href='/weblog/{{y.year}}/{{m|date:"b"}}/'>{{ m|date:"M"}}</a>
-  {% endfor %}
-</div>
-{% endfor %}
 {% endblock %}

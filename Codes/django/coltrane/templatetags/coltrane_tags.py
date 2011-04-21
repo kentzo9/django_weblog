@@ -47,10 +47,28 @@ class LatestContentNode(template.Node):
    def render(self, context):
        context[self.varname] = self.model._default_manager.all()[:self.num]
        return ''
+#subclas of template.Node which must have a render method which return a string
+class EntryArchiveNode(template.Node):
+   def render(self, context):
+      tracks = Entry.live.all()
+      archive = {}
+      date_field = 'pub_date'
+      years = tracks.dates(date_field, 'year')[::-1]
+      for date_year in years:
+         months = tracks.filter(pub_date__year=date_year.year).dates(date_field, 'month')
+         archive[date_year] = months
+
+      archive = sorted(archive.items(), reverse=True)
+      context['entry_archive'] = archive
+      return ''
+
+def do_entry_archive(parser,token):
+   return EntryArchiveNode()
 
 register = template.Library()
 register.tag('get_latest_entries', do_latest_entries)
 register.tag('get_latest_content', do_latest_content)
+register.tag('get_entry_archive', do_entry_archive)
 
 @register.filter
 def cut(value, arg):

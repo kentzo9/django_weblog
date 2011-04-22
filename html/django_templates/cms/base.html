@@ -16,6 +16,23 @@
       {% endblock %}
    </div>
    <div id="sidebar">
+        {% if user.is_authenticated %}
+        <h2>Logout</h2>
+        <form method="post" action="/logout/">
+        {% csrf_token %}
+           <input type="submit" value="logout"/>
+           <input type="hidden" name="next_page" value="/weblog" />
+        </form>
+        <!-- Authenticate account menu -->
+        {% else %}
+        <h2>Login</h2>
+        <form action="/login/" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        <label for="username">Username</label><input type="text" name="username" value="" id="username" />
+        <label for="password">Password</label><input type="password" name="password" value="" id="password" />
+        <p><input type="submit" value="Login →"></p>
+        </form>
+        {% endif %}
       <h2>Navigation</h2>
       <ul id="main-nav">
          <li id="main-nav-entries">

@@ -31,7 +31,15 @@ def category_list_plaintext(request):
    return response
 
 ##Displaying the list of entries under certain category passed in as slug
+from django.contrib.auth.decorators import login_required
+@login_required
 def category_detail(request, slug):
+    current_user=request.user
+    if (current_user.is_authenticated()):
+       print "This is authenticated user"
+       print "current_user is '%s'" % (current_user.get_full_name())
+    elif(current_user.is_anonymous()):
+       print "This is anonymous user"
     category = get_object_or_404(Category, slug=slug)
     #return render_to_response('coltrane/category_detail.html',
     #                          { 'object_list': category.entry_set.all(),
@@ -59,3 +67,27 @@ def track_archive(request):
         template_object_name='entry_list',
         extra_context={'archive': archive},
    )
+
+#from django.contrib.auth import authenticate
+from django.contrib.auth import *
+from django.views.generic.simple import direct_to_template
+from django.http import HttpResponseRedirect, Http404
+def mylogin(request):
+  if request.method == 'POST':
+    user = authenticate(username=request.POST['username'], password=request.POST['password'])
+    if user is not None:
+      if user.is_active:
+        login(request, user)
+        # success
+        return HttpResponseRedirect('/weblog')
+      else:
+        # disabled account
+        return direct_to_template(request, 'inactive_account.html')
+    else:
+      # invalid login
+      return direct_to_template(request, 'invalid_login.html')
+      
+def mylogout(request):
+  logout(request)
+  return HttpResponseRedirect('/weblog')
+  #return direct_to_template(request, 'logged_out.html')

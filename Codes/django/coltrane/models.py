@@ -196,7 +196,7 @@ class EntryModerator(CommentModerator):
       akismet_api = Akismet(key=settings.AKISMET_API_KEY,
                             blog_url="http:/%s/" % 
 
-te.objects.get_current().domain)
+Site.objects.get_current().domain)
       if akismet_api.verify_key():
          akismet_data = { 'comment_type': 'comment',
                           'referrer': request.META['HTTP_REFERER'],

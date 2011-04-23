@@ -17,7 +17,7 @@
    </div>
    <div id="sidebar">
         {% if user.is_authenticated %}
-        <h2>Logout</h2>
+        <h2>Logged In</h2>
         <form method="post" action="/logout/">
         {% csrf_token %}
            <input type="submit" value="logout"/>

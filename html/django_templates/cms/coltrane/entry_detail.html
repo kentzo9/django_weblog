@@ -3,21 +3,22 @@
 {% block title %}{{ block.super }} | {{ object.title }}{% endblock %}
 
 {% block content %}
-<h2>{{ object.title }}</h2>
-{{ object.body_html|safe }}
-<h2>Comments</h2>
-{% load comments %}
-{% load markup %}
-{% get_comment_list for object as comment_list %}
-{% for comment in comment_list %}
-   <p>On {{comment.submit_date|date:"F j, Y"}},
-    {{comment.name}} said:</p>
-    {{comment.comment|markdown:"safe"}}
-{% endfor %}
-
-<h2>Post a comment</h2>
-{% load comments %}
-{% render_comment_form for object %}
+  <h2>{{ object.title }}</h2>
+  <p>{{ object.body_html|safe }}</p>
+   
+  <h2>Comments</h2>
+  {% load comments %}
+  {% load markup %}
+  {% get_comment_list for object as comment_list %}
+  {% for comment in comment_list %}
+     <p>On {{comment.submit_date|date:"F j, Y"}},
+      {{comment.name}} said:</p>
+      {{comment.comment|markdown:"safe"}}
+  {% endfor %}
+   
+  <h2>Post a comment</h2>
+  {% load comments %}
+  {% render_comment_form for object %}
 {% endblock %}
 
 {% block whatis %}

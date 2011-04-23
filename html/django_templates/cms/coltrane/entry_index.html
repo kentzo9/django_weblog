@@ -3,7 +3,7 @@
 {% block title %}{{ block.super }} | Latest entries{% endblock %}
 
 {% block content %}
-   {{kentseng}}
+   <p>Example of using context_processor:kentseng {{kentseng}}</p>
    {% for entry in entry_list %}
      <h2>{{entry.title}}</h2>
      <p>Published on {{ entry.pub_date|date:"F j, Y"}}</p>
@@ -12,7 +12,10 @@
      {% else %}
        {{entry.body_html|truncatewords_html:"50"|safe}}
      {% endif %}
-         <p><a href="{{entry.get_absolute_url}}">Read full entry...</a></p>
+       <p><a href="{{entry.get_absolute_url}}">Read full entry...
+         {% if not entry.enable_comments %}
+         Private only
+         {% endif%}</a></p>
    {% endfor %}
 {% endblock %}
 

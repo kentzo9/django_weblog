@@ -1,20 +1,40 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from coltrane.models import Entry, Category
 from django.views.generic.list_detail import object_list
-from django.views.generic.date_based import archive_index
+from django.views.generic.date_based import archive_index,object_detail
+from django.template import RequestContext
 
 def entries_index(request):
     return render_to_response('coltrane/entry_index.html', {'entry_list' : Entry.objects.all()})
 
+#This is not using the object_detail() from views.generic.date_base.py
 def entry_detail(request,year,month,day,slug):
-   import datetime,time
-   date_stamp = time.strptime(year+month+day, "%Y%b%d")
-   pub_date = datetime.date(*date_stamp[:3])
-   entry = get_object_or_404(Entry, pub_date__year= pub_date.year,
-                             pub_date__month= pub_date.month,
-                             pub_date__day= pub_date.day,
-                             slug = slug)
-   return render_to_response('coltrane/entry_detail.html', {'entry':entry})
+  import datetime,time
+  date_stamp = time.strptime(year+month+day, "%Y%b%d")
+  pub_date = datetime.date(*date_stamp[:3])
+  print pub_date.year, pub_date.month, pub_date.day
+  entry = get_object_or_404(Entry, pub_date__year= pub_date.year,
+                            pub_date__month= pub_date.month,
+                            pub_date__day= pub_date.day,
+                            slug = slug,
+                            status = Entry.LIVE_STATUS)
+  ##no need to check if entry is found, if not found, HTTP_404 will be raised.
+  if not entry.enable_comments and not request.user.is_authenticated():
+    return HttpResponseRedirect('/accounts/login/?next=%s' % request.path)
+  return render_to_response('coltrane/entry_detail.html', {'object':entry},context_instance=RequestContext(request))
+
+# can use the login required decorator if desired.
+#from django.contrib.auth.decorators import login_required
+#@login_required
+#def entry_detail(request, year, month, day, slug):
+#   # if (request.user.is_authenticated()):
+#   #    print "This is authenticated user"
+#   #    print "current_user is '%s'" % (current_user.get_full_name())
+#   # elif(request.user.is_anonymous()):
+#   #    print "This is anonymous user"
+#    if not request.user.is_authenticated():
+#       return HttpResponseRedirect('/accounts/login/?next=%s' % request.path)
+#    return object_detail(request,year,month,day,Entry.live.all(),'pub_date',slug=slug )
 
 def category_list(request):
     return render_to_response('coltrane/category_list.html', {'object_list' : Category.objects.all()})
@@ -31,8 +51,6 @@ def category_list_plaintext(request):
    return response
 
 ##Displaying the list of entries under certain category passed in as slug
-from django.contrib.auth.decorators import login_required
-@login_required
 def category_detail(request, slug):
     current_user=request.user
     if (current_user.is_authenticated()):
@@ -69,7 +87,7 @@ def track_archive(request):
    )
 
 #from django.contrib.auth import authenticate
-from django.contrib.auth import *
+from django.contrib.auth import login,logout,authenticate
 from django.views.generic.simple import direct_to_template
 from django.http import HttpResponseRedirect, Http404
 def mylogin(request):
@@ -85,7 +103,7 @@ def mylogin(request):
         return direct_to_template(request, 'inactive_account.html')
     else:
       # invalid login
-      return direct_to_template(request, 'invalid_login.html')
+      return direct_to_template(request, 'registration/invalid_login.html')
       
 def mylogout(request):
   logout(request)

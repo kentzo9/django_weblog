@@ -21,6 +21,11 @@ urlpatterns += patterns('django.views.generic.date_based',
       'archive_month',entry_info_dict,'coltrane_entry_archive_month'),
      (r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{2})/$',
       'archive_day',entry_info_dict,'coltrane_entry_archive_day'),
-     (r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{2})/(?P<slug>[-\w]+)/$',
-      'object_detail',entry_info_dict,'coltrane_entry_detail'),
+    # (r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{2})/(?P<slug>[-\w]+)/$',
+    #  'object_detail',entry_info_dict,'coltrane_entry_detail'),
 )
+
+urlpatterns +=patterns('', 
+     (r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{2})/(?P<slug>[-\w]+)/$',
+      'coltrane.views.entry_detail',{},'coltrane_entry_detail')
+              )
